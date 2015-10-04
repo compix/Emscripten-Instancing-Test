@@ -17,7 +17,7 @@ int main(int, char**)
 #ifdef EMSCRIPTEN
     emscripten_set_main_loop(onFrame, 0, 1);
 #else
-    while(instancingTest->running())
+    while (instancingTest->running())
         onFrame();
 #endif
 

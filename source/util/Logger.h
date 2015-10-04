@@ -17,8 +17,8 @@ public:
     static std::ostream& stream() noexcept { return std::cout; }
     static std::ostream& errorStream() noexcept { return std::cerr; }
 
-	static void shaderErrorCheck(GLuint shader, const std::string& shaderPath);
-	static void programErrorCheck(GLuint program, const std::string& vsPath, const std::string& fsPath);
+    static void shaderErrorCheck(GLuint shader, const std::string& shaderPath);
+    static void programErrorCheck(GLuint program, const std::string& vsPath, const std::string& fsPath);
 };
 
 #define LOG_INFO_ATTACHMENT ":\nFUNCTION: " << __func__ << "\nFILE: " << __FILE__ << "\nLINE: " << __LINE__

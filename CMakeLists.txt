@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+﻿cmake_minimum_required(VERSION 2.8)
 project(InstancingTest)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -8,7 +8,7 @@ endif()
 message(STATUS "Build: ${CMAKE_BUILD_TYPE}")
 
 if(CMAKE_COMPILER_IS_GNUCXX OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR EMSCRIPTEN)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wextra -Wall -pedantic -Werror -Wno-unused-parameter")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wextra -Wall -pedantic -Werror -Wno-unused-parameter")
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules" ${CMAKE_MODULE_PATH})
@@ -33,20 +33,20 @@ set(ROOT_DIR ${CMAKE_SOURCE_DIR})
 # Set output directories and copy assets to binary directory
 set(ASSET_DIR ${CMAKE_CURRENT_SOURCE_DIR}/assets)
 if(MSVC)
-	message(STATUS "***** Using MSVC compiler *****")
-			
-	file(GLOB DLLS DLLs/*)
-	#set(DLLS ${CMAKE_CURRENT_SOURCE_DIR}/DLLs)
-	
-	if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-		string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	else()
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-	endif()
-	
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4310 /wd4127 /wd4100")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /wd4310 /wd4127 /wd4100")
-	
+    message(STATUS "***** Using MSVC compiler *****")
+    		
+    file(GLOB DLLS DLLs/*)
+    #set(DLLS ${CMAKE_CURRENT_SOURCE_DIR}/DLLs)
+    
+    if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    endif()
+    
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4310 /wd4127 /wd4100")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /wd4310 /wd4127 /wd4100")
+    
     # Handle Visual Studio Debug/Release... config folders
     foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
         string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
@@ -55,35 +55,35 @@ if(MSVC)
         set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/lib)
         set(PDB_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/Temp)
     endforeach()
-
+    
     set(PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Temp)
-
-	# Create source groups for Visual Studio filters
-	# Get all directories first:
-	set(dir_list "")
-	foreach(file_path ${SRC_LIST} ${ASSET_FILES})
-		get_filename_component(dir_path ${file_path} PATH)
-		set(dir_list ${dir_list} ${dir_path})
-	endforeach()
-	list(REMOVE_DUPLICATES dir_list)
-
-	file(GLOB sources *.cpp *.h*)
-	source_group(\\ FILES ${sources})
-
-	foreach(dir ${dir_list})
-		set(abs_dir "${CMAKE_CURRENT_SOURCE_DIR}/${dir}")
-		file(GLOB sources ${abs_dir}/*.cpp ${abs_dir}/*.h* ${abs_dir}/*.vert ${abs_dir}/*.frag ${abs_dir}/*.glsl)
-		string(REPLACE "/" "\\\\" Group ${dir})
-		source_group(${Group} FILES ${sources})
-	endforeach()
+    
+    # Create source groups for Visual Studio filters
+    # Get all directories first:
+    set(dir_list "")
+    foreach(file_path ${SRC_LIST} ${ASSET_FILES})
+        get_filename_component(dir_path ${file_path} PATH)
+        set(dir_list ${dir_list} ${dir_path})
+    endforeach()
+    list(REMOVE_DUPLICATES dir_list)
+    
+    file(GLOB sources *.cpp *.h*)
+    source_group(\\ FILES ${sources})
+    
+    foreach(dir ${dir_list})
+        set(abs_dir "${CMAKE_CURRENT_SOURCE_DIR}/${dir}")
+        file(GLOB sources ${abs_dir}/*.cpp ${abs_dir}/*.h* ${abs_dir}/*.vert ${abs_dir}/*.frag ${abs_dir}/*.glsl)
+        string(REPLACE "/" "\\\\" Group ${dir})
+        source_group(${Group} FILES ${sources})
+    endforeach()
 
     # Copy assets to the binary directory
-	file(COPY ${ASSET_DIR} DESTINATION ${CMAKE_BINARY_DIR})
+    file(COPY ${ASSET_DIR} DESTINATION ${CMAKE_BINARY_DIR})
     foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
         file(COPY ${ASSET_DIR} DESTINATION ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG})
-		foreach(file_path ${DLLS})
-			file(COPY ${file_path} DESTINATION ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG})
-		endforeach()
+        foreach(file_path ${DLLS})
+            file(COPY ${file_path} DESTINATION ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG})
+        endforeach()
     endforeach()
 else()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

@@ -6,38 +6,38 @@
 
 struct Mesh
 {
-	Mesh() {}
+    Mesh() {}
 
-	GLuint vbo{ 0 };
-	GLuint instanceVBO{ 0 };
-	GLuint vao{ 0 };
+    GLuint vbo{ 0 };
+    GLuint instanceVBO{ 0 };
+    GLuint vao{ 0 };
 
-	GLuint vertexCount{ 0 };
+    GLuint vertexCount{ 0 };
 
-	GLenum renderMode{ 0 };
+    GLenum renderMode{ 0 };
 };
 
 struct NormalWrapper
 {
-	~NormalWrapper();
+    ~NormalWrapper();
 
-	void render(const glm::mat4& viewProj);
-	void setup();
+    void render(const glm::mat4& viewProj);
+    void setup();
 
-	GLuint shaderProgram;
-	Mesh mesh;
-	glm::mat4 model;
+    GLuint shaderProgram;
+    Mesh mesh;
+    glm::mat4 model;
 };
 
 struct InstanceWrapper
 {
-	~InstanceWrapper();
+    ~InstanceWrapper();
 
-	void setup();
-	void render(const glm::mat4& viewProj);
+    void setup();
+    void render(const glm::mat4& viewProj);
 
-	GLuint shaderProgram;
-	Mesh mesh;
+    GLuint shaderProgram;
+    Mesh mesh;
 };
 
 class InstancingTest
@@ -56,8 +56,8 @@ private:
 
     std::unique_ptr<Window> m_window;
 
-	NormalWrapper m_normal1;
-	InstanceWrapper m_instance;
+    NormalWrapper m_normal1;
+    InstanceWrapper m_instance;
 
-	glm::mat4 m_viewProj;
+    glm::mat4 m_viewProj;
 };
