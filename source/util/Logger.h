@@ -28,13 +28,13 @@ public:
 
 #ifndef EMSCRIPTEN
 #define GL_ERROR_CHECK() do {                    \
-	GLenum errCode;							     \
-	const GLubyte *errString;                    \
-	if ((errCode = glGetError()) != GL_NO_ERROR) \
-	{											 \
-		errString = gluErrorString(errCode);     \
-		ERROR("OpenGL Error: " << errString);	 \
-	}										     \
+    GLenum errCode;                              \
+    const GLubyte *errString;                    \
+    if ((errCode = glGetError()) != GL_NO_ERROR) \
+    {                                            \
+        errString = gluErrorString(errCode);     \
+        ERROR("OpenGL Error: " << errString);    \
+    }                                            \
 } while (0)
 #else
 #define GL_ERROR_CHECK() do {} while(0)
